@@ -5,6 +5,7 @@ import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Hooks {
 
@@ -16,8 +17,9 @@ public class Hooks {
 
     @Before
     public void setUp() {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
+        WebDriver driver = new ChromeDriver(options);
         scenarioContext.setDriver(driver);
         driver.get("https://www.saucedemo.com/v1/index.html");
     }
