@@ -1,5 +1,9 @@
 package steps.loginSauceLabs;
 
+import framework.supports.BaseTest;
+import framework.supports.ScenarioContext;
+import framework.webDrivers.DriverManager;
+import framework.webDrivers.Drivers;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
@@ -7,11 +11,13 @@ import io.cucumber.java.pt.Quando;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import static framework.webDrivers.DriverManager.getDriver;
-
 public class Login {
 
-    WebDriver driver = getDriver();
+    private final ScenarioContext scenarioContext;
+
+    public Login(ScenarioContext scenarioContext) {
+        this.scenarioContext = scenarioContext;
+    }
 
     @Dado("que o usuario esta na pagina de login do sistema Sauce Labs")
     public void que_o_usuario_esta_na_pagina_de_login_do_sistema_sauce_labs() {
@@ -20,6 +26,7 @@ public class Login {
 
     @Quando("o usuario preenche o campo {string} com {string}")
     public void o_usuario_preenche_o_campo_com(String campo, String string) {
+        WebDriver driver = scenarioContext.getDriver();
         if (campo.equalsIgnoreCase("username")) {
             driver.findElement(By.id("user-name")).sendKeys(string);
             System.out.println("Preenche do usuario: " + string);
