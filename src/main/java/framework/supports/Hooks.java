@@ -19,7 +19,7 @@ public class Hooks {
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
-        WebDriver driver = new ChromeDriver(options);
+        WebDriver driver = new ChromeDriver();
         scenarioContext.setDriver(driver);
         driver.get("https://www.saucedemo.com/v1/index.html");
     }
