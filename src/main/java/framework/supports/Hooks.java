@@ -3,7 +3,9 @@ package framework.supports;
 import com.aventstack.extentreports.Status;
 import framework.tools.Report;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,9 +22,14 @@ public class Hooks {
     }
 
     @Before
-    public void setUp() {
-        Report.configurarExtentReport();
-        Report.createTest("Sauce Labs com Cucumber");
+    public void setUp(Scenario scenario) {
+        String scnarioName = scenario.getName();
+        String featureName = scenario.getUri().getPath();
+
+        featureName = featureName.substring(featureName.lastIndexOf("/") + 1).replace(".feature", "");
+
+        Report.configurarExtentReport(featureName, scnarioName);
+        Report.createTest("Feature: " + featureName + " | Cenario: " + scnarioName);
         extentTest.log(Status.INFO, "Inicio de teste");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
