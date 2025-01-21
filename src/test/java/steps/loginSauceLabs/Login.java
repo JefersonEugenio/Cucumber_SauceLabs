@@ -1,13 +1,12 @@
 package steps.loginSauceLabs;
 
-import framework.supports.BaseTest;
+import com.aventstack.extentreports.Status;
 import framework.supports.ScenarioContext;
-import framework.webDrivers.DriverManager;
-import framework.webDrivers.Drivers;
-import io.cucumber.java.Scenario;
 import io.cucumber.java.pt.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import static framework.tools.Report.extentTest;
 
 public class Login {
 
@@ -19,6 +18,7 @@ public class Login {
 
     @Dado("que o usuario esta na pagina de login do sistema Sauce Labs")
     public void que_o_usuario_esta_na_pagina_de_login_do_sistema_sauce_labs() {
+        extentTest.log(Status.INFO, "A tela está pagina de login do sistema Sauce Labs");
     }
 
     @Quando("o usuario preenche o campo {string} com {string}")
