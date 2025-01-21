@@ -20,10 +20,10 @@ public class Report {
     public static ExtentReports extentReports;
     public static ExtentTest extentTest;
 
-    public static void configurarExtentReport(){
-        CreateFolder.createDirectory(CAMINHO_REPORT);
+    public static void configurarExtentReport(String folder, String file){
+        CreateFolder.createDirectory(CAMINHO_REPORT + File.separator + folder);
 
-        sparkReporter = new ExtentSparkReporter(CAMINHO_REPORT + File.separator + "ReportTestSpark.html");
+        sparkReporter = new ExtentSparkReporter(CAMINHO_REPORT + File.separator + folder + File.separator + file + ".html");
 
         sparkReporter.config().setDocumentTitle("Automação de web");
         sparkReporter.config().setReportName("Automação de teste");
