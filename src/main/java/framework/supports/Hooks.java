@@ -1,11 +1,15 @@
 package framework.supports;
 
+import com.aventstack.extentreports.Status;
+import framework.tools.Report;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+
+import static framework.tools.Report.extentTest;
 
 public class Hooks {
 
@@ -17,6 +21,9 @@ public class Hooks {
 
     @Before
     public void setUp() {
+        Report.configurarExtentReport();
+        Report.createTest("Sauce Labs com Cucumber");
+        extentTest.log(Status.INFO, "Inicio de teste");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
         options.addArguments("--headless");
@@ -30,6 +37,8 @@ public class Hooks {
         WebDriver driver = scenarioContext.getDriver();
         if (driver != null) {
             driver.quit();
+            extentTest.log(Status.INFO, "Finalizado de teste");
+            Report.closeReport();
         }
     }
 
