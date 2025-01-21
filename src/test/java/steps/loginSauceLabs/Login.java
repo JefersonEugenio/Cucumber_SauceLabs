@@ -2,6 +2,7 @@ package steps.loginSauceLabs;
 
 import com.aventstack.extentreports.Status;
 import framework.supports.ScenarioContext;
+import framework.tools.Screenshot;
 import io.cucumber.java.pt.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -26,8 +27,10 @@ public class Login {
         WebDriver driver = scenarioContext.getDriver();
         if (campo.equalsIgnoreCase("username")) {
             driver.findElement(By.id("user-name")).sendKeys(string);
+            extentTest.log(Status.INFO, "Preenche do usuário: " + string);
         } else if (campo.equalsIgnoreCase("password")) {
             driver.findElement(By.id("password")).sendKeys(string);
+            extentTest.log(Status.INFO, "Preenche a senha do usuário: " + string);
         }
     }
 
@@ -36,8 +39,10 @@ public class Login {
         WebDriver driver = scenarioContext.getDriver();
         if (campo.equalsIgnoreCase("username")) {
             driver.findElement(By.id("user-name")).clear();
+            extentTest.log(Status.INFO, "Não preenche o email do usuário");
         } else if (campo.equalsIgnoreCase("password")) {
             driver.findElement(By.id("password")).clear();
+            extentTest.log(Status.INFO, "Não preenche a senha do usuário");
         }
     }
 
@@ -45,19 +50,25 @@ public class Login {
     public void o_usuario_clica_no_botao_login() {
         WebDriver driver = scenarioContext.getDriver();
         driver.findElement(By.id("login-button")).click();
+        extentTest.log(Status.INFO, "A clica no botão 'LOGIN'");
     }
 
     @Entao("o sistema autentica o usuario")
     public void o_sistema_autentica_o_usuario() {
+        extentTest.log(Status.INFO, "Entrando autentica");
     }
 
     @E("redireciona para a tela principal")
     public void redireciona_para_a_tela_principal() {
+        extentTest.log(Status.INFO, "A tela está principal a página do sistema Sauce Labs");
     }
 
     @Então("o sistema exibe a mensagem {string}")
     public void o_sistema_exibe_a_mensagem(String mensagem) throws IllegalAccessException {
         WebDriver driver = scenarioContext.getDriver();
         String imprimir = driver.findElement(By.cssSelector("#login_button_container > div > form > h3 > button")).getText();
+        if (mensagem.contains(imprimir)) {
+            extentTest.log(Status.INFO, "Mensagem exibiu: " + imprimir, Screenshot.screenshotBase64(driver));
+        }
     }
 }
