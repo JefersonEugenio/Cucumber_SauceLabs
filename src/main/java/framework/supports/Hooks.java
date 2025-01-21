@@ -45,6 +45,7 @@ public class Hooks {
     public void tearDown() {
         DriverManager.quitDriver();
         extentTest.log(Status.INFO, "Finalizado de teste");
+        Report.closeReport();
     }
 
 }
