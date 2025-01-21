@@ -2,7 +2,6 @@ package steps.loginSauceLabs;
 
 import framework.supports.BaseTest;
 import framework.supports.ScenarioContext;
-import framework.supports.ScenarioManager;
 import framework.webDrivers.DriverManager;
 import framework.webDrivers.Drivers;
 import io.cucumber.java.Scenario;
