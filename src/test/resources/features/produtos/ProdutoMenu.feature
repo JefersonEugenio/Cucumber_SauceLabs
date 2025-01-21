@@ -34,7 +34,7 @@ Funcionalidade:  Ações do menu
     E aparece uma lista de opções: All Items, About, Logout, Reset App State e X
     E o usuário clica "Reset App State"
     Então O sistema deverá remover a notificação do carrinho
-    E o botão deverá mudar para "ADD TO CART"
+    E o botão deverá mudar para "REMOVE"
 
   Cenário: Opção do menu 'X'
     Dado que o usuário está acessar de login e preencher usuario "standard_user" e senha "secret_sauce"
