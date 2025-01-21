@@ -9,7 +9,11 @@ import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 import static framework.tools.Report.extentTest;
 
@@ -49,5 +53,57 @@ public class Produtos {
     @E("o sistema deverá exibir uma notificação no carrinho.")
     public void oSistemaDeveráExibirUmaNotificaçãoNoCarrinho() throws IllegalAccessException {
         extentTest.log(Status.PASS, "Adicionou ao carrinho", Screenshot.screenshotBase64(driver));
+    }
+
+    @Quando("que o usuário já adicionou um produto {string} ao carrinho")
+    public void queOUsuárioJáAdicionouUmProdutoAoCarrinho(String string) {
+        driver.findElement(By.cssSelector("#inventory_container > div > div:nth-child(2) > div.pricebar > button")).click();
+        extentTest.log(Status.INFO, "A clica no botão 'ADD TO CART'");
+    }
+
+    @E("o usuário clica no botão REMOVE")
+    public void oUsuárioClicaNoBotãoREMOVE() {
+        driver.findElement(By.cssSelector("#inventory_container > div > div:nth-child(2) > div.pricebar > button")).click();
+        extentTest.log(Status.INFO, "A clica no botão 'REMOVE'");
+    }
+
+    @Então("o botão deverá mudar para {string}")
+    public void oBotãoDeveráMudarPara(String string) {
+        Assertions.assertEquals(string, driver.findElement(By.cssSelector("#inventory_container > div > div:nth-child(2) > div.pricebar > button")).getText());
+        extentTest.log(Status.PASS, "Verificado nome no botão para 'ADD TO CART'");
+    }
+
+    @E("a notificação no icone do carrinho não deverá aparecer")
+    public void aNotificaçãoNoIconeDoCarrinhoNãoDeveráAparecer() throws IllegalAccessException {
+        extentTest.log(Status.PASS, "Icone do carrinho não apareceu", Screenshot.screenshotBase64(driver));
+    }
+
+    @Quando("o usuário clica no botão {string} todos os produtos")
+    public void oUsuárioClicaNoBotãoTodosOsProdutos(String string) {
+        List<WebElement> buttons = driver.findElements(By.cssSelector(".btn_inventory"));
+        for (WebElement button : buttons) {
+            if (button.isDisplayed()) {
+                button.click();
+                extentTest.log(Status.INFO, "Clicar no botão 'ADD TO CART'");
+            }
+        }
+    }
+
+    @Então("os botões deverão mudar para {string}")
+    public void osBotõesDeverãoMudarPara(String string) {
+        List<WebElement> buttons = driver.findElements(By.cssSelector(".btn_inventory"));
+        for (WebElement button : buttons) {
+            if (button.isDisplayed()) {
+                Assertions.assertEquals("REMOVE", button.getText());
+                extentTest.log(Status.PASS, "O botão está 'REMOVE'");
+            }
+        }
+    }
+
+    @E("a notificação no icone do carrinho com quantidade que selecionado")
+    public void aNotificaçãoNoIconeDoCarrinhoComQuantidadeQueSelecionado() throws IllegalAccessException {
+        WebElement element = driver.findElement(By.cssSelector("#shopping_cart_container > a > span"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+        extentTest.log(Status.INFO, "Icone do carrinho apareceu com quantidade", Screenshot.screenshotBase64(driver));
     }
 }
